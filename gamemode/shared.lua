@@ -1,6 +1,6 @@
 GM.NAME = "Bomber.exe"
 
 function GM:Initialize()
-    self.baseclass.Initialize(self)
+    self.BaseClass.Initialize(self)
 end
 
