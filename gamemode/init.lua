@@ -11,12 +11,16 @@ include("lobby_manager/sv_lobby.lua")
 include("team/sv_team.lua")
 include("team/team.lua")
 
+include("boom/sv_boom.lua")
+
+AddCSLuaFile("thirdperson.lua")
 
 include("shared.lua")
 
 function GM:PlayerInitialSpawn(ply)
     print("Player " .. ply:Name() .. " has spawned")
     ply:SetNWBool("ThirdPerson", true)
+    ply:SetCustomCollisionCheck(true)
 end
 
 function GM:PlayerSetModel( ply )
