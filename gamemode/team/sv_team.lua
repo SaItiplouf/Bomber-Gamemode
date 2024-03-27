@@ -16,19 +16,11 @@ function GetTeamPerks(ply)
 end
 
 net.Receive("join_red_team", function(len, ply)
-    if IsValid(ply) and ply:IsPlayer() then
-        ply:SetTeam(TEAM_RED)
-        ply:SetPlayerColor(Vector(1, 0, 0))
-        ply:Spawn()
-    end
+    GAMEMODE:PlayerJoinTeam(ply, TEAM_RED)
 end)
 
 net.Receive("join_blue_team", function(len, ply)
-    if IsValid(ply) and ply:IsPlayer() then
-        ply:SetTeam(TEAM_BLUE)
-        ply:SetPlayerColor(Vector(0, 0, 1))
-        ply:Spawn()
-    end
+    GAMEMODE:PlayerJoinTeam(ply, TEAM_BLUE)
 end)
 
 

@@ -18,12 +18,11 @@ AddCSLuaFile("thirdperson.lua")
 include("shared.lua")
 
 function GM:PlayerInitialSpawn(ply)
+    GAMEMODE:PlayerSpawnAsSpectator( ply )
     print("Player " .. ply:Name() .. " has spawned")
-    ply:SetNWBool("ThirdPerson", true)
     ply:SetCustomCollisionCheck(true)
 end
 
 function GM:PlayerSetModel( ply )
-ply:SetModel( "models/player/odessa.mdl" )
+    ply:SetModel( "models/player/odessa.mdl" )
 end
-
