@@ -19,7 +19,7 @@ local function CreateExplosion(ent1, ent2)
 end
 
 function GM:ShouldCollide(ent1, ent2)
-    if ent1:IsPlayer() and ent2:IsPlayer() and ent1:Alive() and ent2:Alive() and ent1:Team() ~= ent2:Team() then return false end
+    if not ent1:IsPlayer() and ent2:IsPlayer() and ent1:Alive() and ent2:Alive() and ent1:Team() ~= ent2:Team() then return true end
     CreateExplosion(ent1, ent2)
     return true
 end
