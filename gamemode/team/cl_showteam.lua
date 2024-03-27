@@ -1,7 +1,6 @@
 function GM:ShowTeam()
     if IsValid(self.TeamSelectFrame) then return end
 
-    -- Création de la fenêtre principale
     self.TeamSelectFrame = vgui.Create("DFrame")
     self.TeamSelectFrame:SetSize(ScrW(), ScrH())
     self.TeamSelectFrame:Center()
@@ -14,13 +13,10 @@ function GM:ShowTeam()
     end
     self.TeamSelectFrame:MakePopup()
 
-    -- Récupération de toutes les équipes disponibles
     local AllTeams = team.GetAllTeams()
 
-    -- Calcul de la position initiale des boutons
     local buttonY = ScrH() / 2 - (#AllTeams * 30) / 2
 
-    -- Création d'un bouton pour chaque équipe
     for teamID, teamInfo in pairs(AllTeams) do
         if teamID != TEAM_CONNECTING and teamID != TEAM_UNASSIGNED then
             local teamButton = vgui.Create("DButton", self.TeamSelectFrame)
