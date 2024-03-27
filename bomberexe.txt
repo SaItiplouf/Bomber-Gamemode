@@ -6,4 +6,6 @@
     "menusystem" "1"
 
     "Settings"
+    {
+    }
 }
