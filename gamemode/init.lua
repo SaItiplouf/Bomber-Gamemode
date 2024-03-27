@@ -8,8 +8,11 @@ include("round_controller/sv_round_controller.lua")
 AddCSLuaFile("lobby_manager/cl_lobby.lua")
 include("lobby_manager/sv_lobby.lua")
 
+include("team/sv_team.lua")
+include("team/team.lua")
+
+
 include("shared.lua")
-include("team.lua")
 
 function GM:PlayerInitialSpawn(ply)
     print("Player " .. ply:Name() .. " has spawned")

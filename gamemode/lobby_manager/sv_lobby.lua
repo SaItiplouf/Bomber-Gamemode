@@ -1,4 +1,3 @@
-include("sv_team.lua")
 util.AddNetworkString("open_lobby")
 util.AddNetworkString("start_game")
 
