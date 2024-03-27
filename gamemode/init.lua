@@ -9,7 +9,6 @@ AddCSLuaFile("lobby_manager/cl_lobby.lua")
 include("lobby_manager/sv_lobby.lua")
 
 include("team/sv_team.lua")
-include("team/team.lua")
 
 include("boom/sv_boom.lua")
 
@@ -23,6 +22,4 @@ function GM:PlayerInitialSpawn(ply)
     ply:SetCustomCollisionCheck(true)
 end
 
-function GM:PlayerSetModel( ply )
-    ply:SetModel( "models/player/odessa.mdl" )
-end
+
