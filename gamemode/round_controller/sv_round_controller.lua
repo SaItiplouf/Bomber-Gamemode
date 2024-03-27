@@ -5,12 +5,21 @@ local iTeamBlueScore = 0
 util.AddNetworkString("UpdateRoundStatus")
 util.AddNetworkString("UpdateTeamScore")
 
-function BeginRound()
-    round_status = 1
-    UpdateClientRoundStatus()
+
+local function UpdateClientScore()
+    net.Start("UpdateTeamScore")
+    net.WriteInt(iTeamRedScore, 4)
+    net.WriteInt(iTeamBlueScore, 4)
+    net.Broadcast()
 end
 
-function EndRound()
+local function UpdateClientRoundStatus()
+    net.Start("UpdateRoundStatus")
+     net.WriteInt(round_status, 4)
+    net.Broadcast()
+end
+
+local function EndRound()
     round_status = 0
     iTeamRedScore = 0
     iTeamBlueScore = 0
@@ -20,6 +29,12 @@ function EndRound()
         ply:KillSilent()
         GetTeamPerks(ply)
     end
+end
+
+
+function BeginRound()
+    round_status = 1
+    UpdateClientRoundStatus()
 end
 
 function GetRoundStatus()
@@ -41,15 +56,4 @@ function IncrementScore(ply)
 
 end
 
-function UpdateClientScore()
-    net.Start("UpdateTeamScore")
-    net.WriteInt(iTeamRedScore, 4)
-    net.WriteInt(iTeamBlueScore, 4)
-    net.Broadcast()
-end
 
-function UpdateClientRoundStatus()
-    net.Start("UpdateRoundStatus")
-     net.WriteInt(round_status, 4)
-    net.Broadcast()
-end

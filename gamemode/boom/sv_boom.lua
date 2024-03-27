@@ -1,4 +1,4 @@
- function CreateExplosion(ent1, ent2)
+local function CreateExplosion(ent1, ent2)
     local collisionDistance = 50
     if ent1:GetPos():Distance(ent2:GetPos()) <= collisionDistance then
         print("Collision entre deux joueurs: " .. ent1:Name() .. " et " .. ent2:Name())
