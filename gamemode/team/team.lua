@@ -18,13 +18,7 @@ function GM:OnPlayerChangedTeam(ply, oldTeam, newTeam)
             ply:SetPlayerColor(Vector(0, 0, 1))
         elseif ply:Team() == TEAM_RED then
             ply:SetPlayerColor(Vector(1, 0, 0))
-        elseif ply:Team() == TEAM_SPECTATOR then
-            ply:SetMoveType(MOVETYPE_NOCLIP)
-            ply:SetRenderMode(RENDERMODE_NONE)
-            return
         end
-            ply:SetMoveType(MOVETYPE_WALK)
-            ply:SetRenderMode(RENDERMODE_NORMAL)
     end
 end
 

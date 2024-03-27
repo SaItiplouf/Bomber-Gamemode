@@ -1,11 +1,8 @@
-util.AddNetworkString("open_lobby")
 util.AddNetworkString("start_game")
 util.AddNetworkString( "client_ready" )
 
 local function EnterLobby(ply)
-    print(ply:Team())
-    net.Start("open_lobby")
-    net.Send(ply)
+    GAMEMODE:ShowTeam(ply)
 end
 
 net.Receive("start_game", function()
