@@ -1,10 +1,10 @@
- function createExplosion(ent1, ent2)
+ function CreateExplosion(ent1, ent2)
     local collisionDistance = 50
     if ent1:GetPos():Distance(ent2:GetPos()) <= collisionDistance then
         print("Collision entre deux joueurs: " .. ent1:Name() .. " et " .. ent2:Name())
 
-        local explosionPos = (ent1:GetPos() + ent2:GetPos()) / 2 -- Position de l'explosion au milieu des deux joueurs
-        util.ScreenShake(explosionPos, 5, 5, 1, 500) -- Faire trembler l'écran
+        local explosionPos = (ent1:GetPos() + ent2:GetPos()) / 2
+        util.ScreenShake(explosionPos, 5, 5, 1, 500)
         ent1:EmitSound("ambient/explosions/explode_4.wav", 100, 100)
 
         local effectdata = EffectData()
@@ -14,7 +14,7 @@
         util.Effect("Explosion", effectdata)
 
         ent1:Kill()
-        incrementScore(ent2)
+        IncrementScore(ent2)
     end
 end
 
@@ -23,7 +23,7 @@ function GM:ShouldCollide(ent1, ent2)
         if not (ent1:Alive() and ent2:Alive() and ent1:Team() ~= ent2:Team()) then
             return false
         end
-        createExplosion(ent1, ent2)
+        CreateExplosion(ent1, ent2)
     end
 
     return true

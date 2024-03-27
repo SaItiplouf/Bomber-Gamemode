@@ -1,6 +1,6 @@
 local round_status = 0
-local TEAM_RED_SCORE = 0
-local TEAM_BLUE_SCORE = 0
+local iTeamRedScore = 0
+local iTeamBlueScore = 0
 
 include("cl_score_hud.lua")
 
@@ -9,11 +9,11 @@ net.Receive("UpdateRoundStatus", function(len)
 end)
 
 net.Receive("UpdateTeamScore", function(len)
-    TEAM_RED_SCORE = net.ReadInt(4)
-    TEAM_BLUE_SCORE = net.ReadInt(4)
+    iTeamRedScore = net.ReadInt(4)
+    iTeamBlueScore = net.ReadInt(4)
 end)
 
-function getRoundStatus()
+function GetRoundStatus()
     return round_status
 end
 

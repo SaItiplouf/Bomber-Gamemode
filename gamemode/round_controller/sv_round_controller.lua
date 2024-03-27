@@ -1,54 +1,54 @@
 local round_status = 0
-local TEAM_RED_SCORE = 0
-local TEAM_BLUE_SCORE = 0
+local iTeamRedScore = 0
+local iTeamBlueScore = 0
 
 util.AddNetworkString("UpdateRoundStatus")
 util.AddNetworkString("UpdateTeamScore")
 
-function beginRound()
+function BeginRound()
     round_status = 1
-    updateClientRoundStatus()
+    UpdateClientRoundStatus()
 end
 
-function endRound()
+function EndRound()
     round_status = 0
-    TEAM_RED_SCORE = 0
-    TEAM_BLUE_SCORE = 0
+    iTeamRedScore = 0
+    iTeamBlueScore = 0
     updateClientRoundStatus()
     updateClientScore()
     for _, ply in ipairs(player.GetAll()) do
         ply:KillSilent()
-        getTeamPerks(ply)
+        GetTeamPerks(ply)
     end
 end
 
-function getRoundStatus()
+function GetRoundStatus()
     return round_status
 end
 
 
-function incrementScore(ply)
+function IncrementScore(ply)
     if ply:Team() == TEAM_RED then
-        TEAM_RED_SCORE = TEAM_RED_SCORE + 1
+        iTeamRedScore = iTeamRedScore + 1
     elseif ply:Team() == TEAM_BLUE then
-        TEAM_BLUE_SCORE = TEAM_BLUE_SCORE + 1
+        iTeamBlueScore = iTeamBlueScore + 1
     end
-    if TEAM_RED_SCORE == 3 or TEAM_BLUE_SCORE == 3 then
-        endRound()
+    if iTeamRedScore == 10 or iTeamBlueScore == 10 then
+        EndRound()
         return
     end
-    updateClientScore()
+    UpdateClientScore()
 
 end
 
-function updateClientScore()
+function UpdateClientScore()
     net.Start("UpdateTeamScore")
-    net.WriteInt(TEAM_RED_SCORE, 4)
-    net.WriteInt(TEAM_BLUE_SCORE, 4)
+    net.WriteInt(iTeamRedScore, 4)
+    net.WriteInt(iTeamBlueScore, 4)
     net.Broadcast()
 end
 
-function updateClientRoundStatus()
+function UpdateClientRoundStatus()
     net.Start("UpdateRoundStatus")
      net.WriteInt(round_status, 4)
     net.Broadcast()

@@ -1,4 +1,4 @@
-function openLobby()
+function OpenLobby()
     local frame = vgui.Create("DFrame")
     frame:SetSize(ScrW(), ScrH())
     frame:Center()
@@ -33,4 +33,4 @@ function openLobby()
 end
 
 
-net.Receive("open_lobby", openLobby)
+net.Receive("open_lobby", OpenLobby)

@@ -1,7 +1,7 @@
 util.AddNetworkString("join_red_team")
 util.AddNetworkString("join_blue_team")
 
-function getTeamPerks(ply)
+function GetTeamPerks(ply)
     if IsValid(ply) and ply:IsPlayer() then
         if ply:Team() == TEAM_BLUE then
             ply:Give("weapon_smg1")
@@ -34,6 +34,6 @@ end)
 
 
 hook.Add("PlayerSpawn", "SpawnAtTeamSpawnpoint", function(ply)
-    getTeamPerks(ply)
+    GetTeamPerks(ply)
 end)
 
