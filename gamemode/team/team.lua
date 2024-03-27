@@ -10,7 +10,7 @@ function GM:CreateTeams()
 end
 
 function GM:PlayerChangedTeam(ply, oldTeam, newTeam)
-    if not newTeam and newTeam == TEAM_SPECTATOR then return end
+    if not newTeam or newTeam == TEAM_SPECTATOR then return end
     local classes = team.GetClass(newTeam)
     player_manager.SetPlayerClass(ply, classes[math.random(1, #classes)])
 end
