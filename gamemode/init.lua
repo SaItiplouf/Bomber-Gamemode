@@ -5,9 +5,18 @@ AddCSLuaFile("shared.lua")
 AddCSLuaFile("round_controller/cl_round_controller.lua")
 include("round_controller/sv_round_controller.lua")
 
+AddCSLuaFile("lobby_manager/cl_lobby.lua")
+include("lobby_manager/sv_lobby.lua")
 
 include("shared.lua")
+include("team.lua")
 
 function GM:PlayerInitialSpawn(ply)
     print("Player " .. ply:Name() .. " has spawned")
+    ply:SetNWBool("ThirdPerson", true)
 end
+
+function GM:PlayerSetModel( ply )
+ply:SetModel( "models/player/odessa.mdl" )
+end
+
