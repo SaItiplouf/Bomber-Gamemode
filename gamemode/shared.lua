@@ -7,5 +7,5 @@ include("player_class/player.lua")
 include("player_class/team_blue.lua")
 include("player_class/team_red.lua")
 function GM:Initialize()
-    self.BaseClass.Initialize(self)
+    self.BaseClass.Initialize( self )
 end
