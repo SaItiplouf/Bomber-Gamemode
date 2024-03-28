@@ -9,8 +9,8 @@ function GM:CreateTeams()
     team.SetSpawnPoint( TEAM_SPECTATOR, "worldspawn" )
 end
 
-function GM:PlayerChangedTeam( pPlayer, oldTeam, newTeam )
-    if not newTeam or newTeam == TEAM_SPECTATOR then return end
-    local oPlayerClass = team.GetClass( newTeam )
+function GM:PlayerChangedTeam( pPlayer, _, iNewTeam )
+    if not iNewTeam or iNewTeam == TEAM_SPECTATOR then return end
+    local oPlayerClass = team.GetClass( iNewTeam )
     player_manager.SetPlayerClass( pPlayer, oPlayerClass[math.random(1, #oPlayerClass)] )
 end
