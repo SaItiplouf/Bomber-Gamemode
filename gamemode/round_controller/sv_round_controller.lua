@@ -1,46 +1,46 @@
-local round_status = 0
+local iRoundStatus = 0
 local iTeamRedScore = 0
 local iTeamBlueScore = 0
-util.AddNetworkString("UpdateRoundStatus")
-util.AddNetworkString("UpdateTeamScore")
+util.AddNetworkString('Monolith.Game.UpdateRoundStatus')
+util.AddNetworkString('Monolith.Game.UpdateTeamScore')
 local function UpdateClientScore()
-    net.Start("UpdateTeamScore")
+    net.Start('Monolith.Game.UpdateTeamScore')
     net.WriteInt(iTeamRedScore, 4)
     net.WriteInt(iTeamBlueScore, 4)
     net.Broadcast()
 end
 
 local function UpdateClientRoundStatus()
-    net.Start("UpdateRoundStatus")
-    net.WriteInt(round_status, 4)
+    net.Start('Monolith.Game.UpdateRoundStatus')
+    net.WriteInt(iRoundStatus, 4)
     net.Broadcast()
 end
 
 local function EndRound()
-    round_status = 0
+    iRoundStatus = 0
     iTeamRedScore = 0
     iTeamBlueScore = 0
     updateClientRoundStatus()
     updateClientScore()
-    for _, ply in ipairs(player.GetAll()) do
-        ply:KillSilent()
-        GetTeamPerks(ply)
+    for _, pPlayer in ipairs(player.GetAll()) do
+        pPlayer:KillSilent()
+        GetTeamPerks(pPlayer)
     end
 end
 
 function BeginRound()
-    round_status = 1
+    iRoundStatus = 1
     UpdateClientRoundStatus()
 end
 
 function GetRoundStatus()
-    return round_status
+    return iRoundStatus
 end
 
-function IncrementScore(ply)
-    if ply:Team() == TEAM_RED then
+function IncrementScore(pPlayer)
+    if pPlayer:Team() == TEAM_RED then
         iTeamRedScore = iTeamRedScore + 1
-    elseif ply:Team() == TEAM_BLUE then
+    elseif pPlayer:Team() == TEAM_BLUE then
         iTeamBlueScore = iTeamBlueScore + 1
     end
 

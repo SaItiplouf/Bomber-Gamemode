@@ -1,13 +1,13 @@
-local function thirdPerson(ply, origin, angles, fov)
-    if not ply:GetNWBool("ThirdPerson", false) then return end
-    local view = {}
-    view.origin = origin - (angles:Forward() * 100) + (angles:Up() * 20)
-    view.angles = angles
-    view.fov = fov
-    view.drawviewer = true
-    return view
+local function thirdPerson(pPlayer, vOrigin, aAngle, iFov)
+    if not pPlayer:GetNWBool("ThirdPerson", false) then return end
+    local tView = {}
+    tView.origin = vOrigin - (aAngle:Forward() * 100) + (aAngle:Up() * 20)
+    tView.angles = aAngle
+    tView.fov = iFov
+    tView.drawtViewer = true
+    return tView
 end
 
-function GM:CalcView(ply, origin, angles, fov)
-    thirdPerson(ply, origin, angles, fov)
+function GM:CalcView(pPlayer, vOrigin, aAngle, iFov)
+    return thirdPerson(pPlayer, vOrigin, aAngle, iFov)
 end

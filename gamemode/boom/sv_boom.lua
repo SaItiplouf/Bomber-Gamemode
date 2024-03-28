@@ -1,27 +1,27 @@
-local function createEffect(explosionPos)
-    local effectdata = EffectData()
-    effectdata:SetStart(explosionPos)
-    effectdata:SetOrigin(explosionPos)
-    effectdata:SetScale(1)
-    util.Effect("Explosion", effectdata)
+local function createEffect(vExplosionPos)
+    local oEffectData = EffectData()
+    oEffectData:SetStart(vExplosionPos)
+    oEffectData:SetOrigin(vExplosionPos)
+    oEffectData:SetScale(1)
+    util.Effect("Explosion", oEffectData)
 end
 
-local function CreateExplosion(ent1, ent2)
-    local collisionDistance = 50
-    if not ent1:IsPlayer() or not ent2:IsPlayer() then return end
-    if not ent1:Alive() or not ent2:Alive() then return end
-    if ent1:Team() == ent2:Team() then return end
-    if ent1:GetPos():Distance(ent2:GetPos()) > collisionDistance then return end
-    print("Collision entre deux joueurs: " .. ent1:Name() .. " et " .. ent2:Name())
-    local explosionPos = (ent1:GetPos() + ent2:GetPos()) / 2
-    util.ScreenShake(explosionPos, 5, 5, 1, 500)
-    createEffect(explosionPos)
-    ent1:EmitSound("ambient/explosions/explode_4.wav", 100, 100)
-    ent1:Kill()
-    IncrementScore(ent2)
+local function CreateExplosion(eVictim, eAttacker)
+    local iCOLLISION_DISTANCE = 50
+    if not eVictim:IsPlayer() or not eAttacker:IsPlayer() then return end
+    if not eVictim:Alive() or not eAttacker:Alive() then return end
+    if eVictim:Team() == eAttacker:Team() then return end
+    if eVictim:GetPos():Distance(eAttacker:GetPos()) > iCOLLISION_DISTANCE then return end
+    print("Collision entre deux joueurs: " .. eVictim:Name() .. " et " .. eAttacker:Name())
+    local vExplosionPos = (eVictim:GetPos() + eAttacker:GetPos()) / 2
+    util.ScreenShake(vExplosionPos, 5, 5, 1, 500)
+    createEffect(vExplosionPos)
+    eVictim:EmitSound("ambient/explosions/explode_4.wav", 100, 100)
+    eVictim:Kill()
+    IncrementScore(eAttacker)
 end
 
-function GM:ShouldCollide(ent1, ent2)
-    CreateExplosion(ent1, ent2)
+function GM:ShouldCollide(eVictim, eAttacker)
+    CreateExplosion(eVictim, eAttacker)
     return true
 end

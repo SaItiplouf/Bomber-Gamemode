@@ -1,9 +1,9 @@
-util.AddNetworkString("client_ready")
-local function EnterLobby(ply)
-    GAMEMODE:ShowTeam(ply)
+util.AddNetworkString('Monolith.Client.Ready')
+local function EnterLobby(pPlayer)
+    GAMEMODE:ShowTeam(pPlayer)
 end
 
-net.Receive("client_ready", function(len, ply)
-    EnterLobby(ply)
-    ply:SetNWBool("ThirdPerson", true)
+net.Receive('Monolith.Client.Ready', function(_, pPlayer)
+    EnterLobby(pPlayer)
+    pPlayer:SetNWBool('ThirdPerson', true)
 end)
