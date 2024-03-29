@@ -2,8 +2,8 @@ local iRoundStatus = 0
 
 local function DrawTeamInfo()
     local iYoffset = 20
-    for iTeamIndex, tTeamData in pairs( team.GetAllTeams() ) do
-        if tTeamData.Joinable and iTeamIndex != TEAM_SPECTATOR then continue end
+    for iTeamIndex, tTeamData in pairs(team.GetAllTeams()) do
+        if not tTeamData.Joinable or iTeamIndex == TEAM_SPECTATOR then continue end
         local oTeamColor = team.GetColor( iTeamIndex )
         local sTeamName = team.GetName( iTeamIndex )
         local iTeamScore = team.GetScore( iTeamIndex )
