@@ -2,6 +2,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 -- Include others scripts
 AddCSLuaFile( "round_controller/cl_round_controller.lua" )
+AddCSLuaFile( "team/team.lua" )
+AddCSLuaFile( "team/cl_showteam.lua" )
 include( "round_controller/sv_round_controller.lua" )
 include( "lobby_manager/sv_lobby.lua" )
 include( "boom/sv_boom.lua" )

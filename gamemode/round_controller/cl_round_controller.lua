@@ -1,19 +1,42 @@
 local iRoundStatus = 0
-local iTeamRedScore = 0
-local iTeamBlueScore = 0
+
 function GM:HUDPaint()
-    local redScoreX = ScrW() - 200
-    local redScoreY = 20
-    local blueScoreX = ScrW() - 200
-    local blueScoreY = 60
-    draw.SimpleText( "Red Team : " .. iTeamRedScore, "DermaLarge", redScoreX, redScoreY, Color(255, 0, 0), TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
-    draw.SimpleText( "Blue Team : " .. iTeamBlueScore, "DermaLarge", blueScoreX, blueScoreY, Color(0, 0, 255), TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
+
+    local iHudWidth, iHudHeight = 250, 50
+    local iHudX = ( ScrW() - iHudWidth ) / 2
+    local iHudY = 20
+
+    draw.RoundedBox(8, iHudX, iHudY, iHudWidth, iHudHeight, Color(0, 0, 0, 150))
+
+    local sRoundText
+    if iRoundStatus == 0 then
+        sRoundText = "Round in progress.."
+    else
+        sRoundText = "Round is finishing"
+    end
+
+    local iTextX = iHudX + iHudWidth / 2
+    local iTextY = iHudY + iHudHeight / 2
+    draw.SimpleText(sRoundText, "DermaLarge", iTextX, iTextY, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+    if iRoundStatus == 0 then
+        local iYoffset = 20
+        for iTeamIndex, tTeamData in pairs(team.GetAllTeams()) do
+            if tTeamData.Joinable and iTeamIndex ~= 1002 then
+                local tTeamColor = team.GetColor( iTeamIndex )
+                local sTeamName = team.GetName( iTeamIndex )
+                local iTeamScore = team.GetScore( iTeamIndex )
+                draw.SimpleText( sTeamName .. " : " .. iTeamScore, "DermaLarge", ScrW() - 200, iYoffset, tTeamColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
+                iYoffset = iYoffset + 40
+            end
+        end
+    end
 end
 
-net.Receive( "Monolith.Game.UpdateRoundStatus", function(len) iRoundStatus = net.ReadInt(4) end )
-net.Receive( "Monolith.Game.UpdateTeamScore", function(len)
-    iTeamRedScore = net.ReadInt(4)
-    iTeamBlueScore = net.ReadInt(4)
+
+net.Receive( "Monolith.Game.UpdateRoundStatus", function(_)
+    iRoundStatus = net.ReadInt(4)
+    print(iRoundStatus)
 end )
 
 function GetRoundStatus()

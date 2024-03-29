@@ -1,14 +1,6 @@
-local iRoundStatus = 0
-local iTeamRedScore = 0
-local iTeamBlueScore = 0
 util.AddNetworkString( "Monolith.Game.UpdateRoundStatus" )
-util.AddNetworkString( "Monolith.Game.UpdateTeamScore" )
-local function UpdateClientScore()
-    net.Start( "Monolith.Game.UpdateTeamScore" )
-    net.WriteInt( iTeamRedScore, 4 )
-    net.WriteInt( iTeamBlueScore, 4)
-    net.Broadcast()
-end
+local iRoundStatus = 0
+
 
 local function UpdateClientRoundStatus()
     net.Start( "Monolith.Game.UpdateRoundStatus" )
@@ -17,19 +9,21 @@ local function UpdateClientRoundStatus()
 end
 
 local function EndRound()
-    iRoundStatus = 0
-    iTeamRedScore = 0
-    iTeamBlueScore = 0
-    updateClientRoundStatus()
-    updateClientScore()
+    iRoundStatus = 1
+    UpdateClientRoundStatus()
     for _, pPlayer in ipairs( player.GetAll() ) do
-        pPlayer:KillSilent()
-        GetTeamPerks( pPlayer )
+        if pPlayer:Team() ~= TEAM_SPECTATOR then
+            pPlayer:KillSilent()
+        end
     end
+    timer.Simple(5, function()
+        BeginRound()
+    end)
 end
 
+
 function BeginRound()
-    iRoundStatus = 1
+    iRoundStatus = 0
     UpdateClientRoundStatus()
 end
 
@@ -38,16 +32,25 @@ function GetRoundStatus()
 end
 
 function IncrementScore( pPlayer )
-    if pPlayer:Team() == TEAM_RED then
-        iTeamRedScore = iTeamRedScore + 1
-    elseif pPlayer:Team() == TEAM_BLUE then
-        iTeamBlueScore = iTeamBlueScore + 1
-    end
+    local iTeamIndex = pPlayer:Team()
+    team.AddScore( iTeamIndex, 1 )
 
-    if iTeamRedScore == 10 or iTeamBlueScore == 10 then
+    if team.GetScore( iTeamIndex ) >= 3 then
+        local tTeams = team.GetAllTeams()
+        for iTeam, _ in pairs(tTeams) do
+             team.SetScore(iTeam, 0)
+        end
+
         EndRound()
         return
     end
+end
 
-    UpdateClientScore()
+-- Block respawn when round is over
+function GM:PlayerDeathThink( pPlayer )
+    if pPlayer:Team() ~= TEAM_SPECTATOR and iRoundStatus == 1 then
+        return false
+    end
+    pPlayer:Spawn()
+    return true
 end
