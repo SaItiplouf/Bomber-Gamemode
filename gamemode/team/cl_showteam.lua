@@ -11,8 +11,8 @@ function GM:ShowTeam()
     self.TeamSelectFrame:MakePopup()
     local AllTeams = team.GetAllTeams()
     local buttonY = ScrH() / 2 - ( #AllTeams * 30 ) / 2
-    for iTeam, tTeamInfo in pairs( AllTeams ) do
-        if iTeam ~= TEAM_CONNECTING and iTeam ~= TEAM_UNASSIGNED then
+    for iTeam, tTeamData in pairs( AllTeams ) do
+        if not tTeamData.Joinable or iTeamIndex == TEAM_SPECTATOR or iTeamIndex == TEAM_CONNECTING or iTeamIndex == TEAM_UNASSIGNED then continue end
             local teamButton = vgui.Create( "DButton", self.TeamSelectFrame )
             teamButton:SetSize( 200, 30 )
             teamButton:SetPos( ScrW() / 2 - 100, buttonY )
@@ -20,12 +20,12 @@ function GM:ShowTeam()
             teamButton:SetTextColor( Color(255, 255, 255) )
             teamButton.Paint = function( s, w, h )
                 if teamButton:IsHovered() then
-                    draw.RoundedBox( 0, 0, 0, w, h, tTeamInfo.Color )
+                    draw.RoundedBox( 0, 0, 0, w, h, tTeamData.Color )
                 else
-                    draw.RoundedBox( 0, 0, 0, w, h, Color(tTeamInfo.Color.r, tTeamInfo.Color.g, tTeamInfo.Color.b, 200) )
+                    draw.RoundedBox( 0, 0, 0, w, h, Color(tTeamData.Color.r, tTeamData.Color.g, tTeamData.Color.b, 200) )
                 end
 
-                draw.SimpleText( tTeamInfo.Name, "Trebuchet24", w / 2, h / 2, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+                draw.SimpleText( tTeamData.Name, "Trebuchet24", w / 2, h / 2, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
             end
 
             teamButton.DoClick = function()
@@ -35,5 +35,4 @@ function GM:ShowTeam()
 
             buttonY = buttonY + 40
         end
-    end
 end
