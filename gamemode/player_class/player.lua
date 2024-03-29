@@ -6,7 +6,7 @@ function PLAYER:SetModel()
 end
 
 function PLAYER:Spawn()
-    local oTeamColor = team.GetColor(self.Player:Team())
+    local oTeamColor = team.GetColor( self.Player:Team() )
     self.Player:SetPlayerColor( oTeamColor:ToVector() )
 end
 
