@@ -1,12 +1,15 @@
 local iRoundStatus = 0
 
-
-
-local function DrawTeamText( iTeamIndex, iYoffset )
-    local oTeamColor = team.GetColor( iTeamIndex )
-    local sTeamName = team.GetName( iTeamIndex )
-    local iTeamScore = team.GetScore( iTeamIndex )
-    draw.SimpleText( sTeamName .. " : " .. iTeamScore, "DermaLarge", ScrW() - 200, iYoffset, oTeamColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
+local function DrawTeamInfo()
+    local iYoffset = 20
+    for iTeamIndex, tTeamData in pairs( team.GetAllTeams() ) do
+        if tTeamData.Joinable and iTeamIndex != TEAM_SPECTATOR then continue end
+        local oTeamColor = team.GetColor( iTeamIndex )
+        local sTeamName = team.GetName( iTeamIndex )
+        local iTeamScore = team.GetScore( iTeamIndex )
+        draw.SimpleText( sTeamName .. " : " .. iTeamScore, "DermaLarge", ScrW() - 200, iYoffset, oTeamColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
+        iYoffset = iYoffset + 40
+    end
 end
 
 function GM:HUDPaint()
@@ -21,13 +24,7 @@ function GM:HUDPaint()
     local iTextX = iHudX + iHudWidth / 2
     local iTextY = iHudY + iHudHeight / 2
     draw.SimpleText( sRoundText, "DermaLarge", iTextX, iTextY, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
-    local iYoffset = 20
-    for iTeamIndex, tTeamData in pairs( team.GetAllTeams() ) do
-        if iRoundStatus ~= 0 then continue end
-        if not tTeamData.Joinable or iTeamIndex == TEAM_SPECTATOR then continue end
-        DrawTeamText( iTeamIndex, iYoffset )
-        iYoffset = iYoffset + 40
-    end
+    if iRoundStatus == 0 then DrawTeamInfo() end
 end
 
 
