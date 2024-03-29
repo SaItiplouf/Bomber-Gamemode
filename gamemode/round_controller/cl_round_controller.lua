@@ -17,10 +17,10 @@ function GM:HUDPaint()
     for iTeamIndex, tTeamData in pairs( team.GetAllTeams() ) do
         if iRoundStatus ~= 0 then continue end
         if not tTeamData.Joinable or iTeamIndex == TEAM_SPECTATOR then continue end
-        local tTeamColor = team.GetColor( iTeamIndex )
+        local oTeamColor = team.GetColor( iTeamIndex )
         local sTeamName = team.GetName( iTeamIndex )
         local iTeamScore = team.GetScore( iTeamIndex )
-        draw.SimpleText( sTeamName .. " : " .. iTeamScore, "DermaLarge", ScrW() - 200, iYoffset, tTeamColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
+        draw.SimpleText( sTeamName .. " : " .. iTeamScore, "DermaLarge", ScrW() - 200, iYoffset, oTeamColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
         iYoffset = iYoffset + 40
     end
 end
