@@ -8,28 +8,20 @@ function GM:HUDPaint()
 
     draw.RoundedBox(8, iHudX, iHudY, iHudWidth, iHudHeight, Color(0, 0, 0, 150))
 
-    local sRoundText
-    if iRoundStatus == 0 then
-        sRoundText = "Round in progress.."
-    else
-        sRoundText = "Round is finishing"
-    end
+    local sRoundText = (iRoundStatus == 0) and "Round in progress.." or "Round is finishing"
 
     local iTextX = iHudX + iHudWidth / 2
     local iTextY = iHudY + iHudHeight / 2
     draw.SimpleText(sRoundText, "DermaLarge", iTextX, iTextY, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-
-    if iRoundStatus == 0 then
-        local iYoffset = 20
-        for iTeamIndex, tTeamData in pairs(team.GetAllTeams()) do
-            if tTeamData.Joinable and iTeamIndex ~= 1002 then
-                local tTeamColor = team.GetColor( iTeamIndex )
-                local sTeamName = team.GetName( iTeamIndex )
-                local iTeamScore = team.GetScore( iTeamIndex )
-                draw.SimpleText( sTeamName .. " : " .. iTeamScore, "DermaLarge", ScrW() - 200, iYoffset, tTeamColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
-                iYoffset = iYoffset + 40
-            end
-        end
+    local iYoffset = 20
+    for iTeamIndex, tTeamData in pairs(team.GetAllTeams()) do
+        if iRoundStatus ~= 0 then continue end
+        if not tTeamData.Joinable or iTeamIndex == TEAM_SPECTATOR then continue end
+        local tTeamColor = team.GetColor( iTeamIndex )
+        local sTeamName = team.GetName( iTeamIndex )
+        local iTeamScore = team.GetScore( iTeamIndex )
+        draw.SimpleText( sTeamName .. " : " .. iTeamScore, "DermaLarge", ScrW() - 200, iYoffset, tTeamColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP )
+        iYoffset = iYoffset + 40
     end
 end
 
