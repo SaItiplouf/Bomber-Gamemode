@@ -7,7 +7,7 @@ end
 
 function PLAYER:Spawn()
     local oTeamColor = team.GetColor(self.Player:Team())
-    self.Player:SetPlayerColor( Vector( oTeamColor.r / 255, oTeamColor.g / 255, oTeamColor.b / 255 ) )
+    self.Player:SetPlayerColor( oTeamColor:ToVector() )
 end
 
 player_manager.RegisterClass( "player_custom", PLAYER, "player_default" )

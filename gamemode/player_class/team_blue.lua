@@ -7,8 +7,4 @@ function PLAYER:Loadout()
     self.Player:GiveAmmo( 255, "smg1" )
 end
 
-function PLAYER:SetModel()
-    self.Player:SetModel( "models/player/odessa.mdl" )
-end
-
 player_manager.RegisterClass( "player_blue", PLAYER, "player_custom" )
