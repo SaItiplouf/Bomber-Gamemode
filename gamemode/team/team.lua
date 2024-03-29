@@ -1,11 +1,14 @@
 TEAM_RED = 1
 TEAM_BLUE = 2
+TEAM_FUN = 3
 
 function GM:CreateTeams()
     team.SetUp( TEAM_RED, "Red Team", Color(255, 0, 0) )
     team.SetClass( TEAM_RED, { "player_red" } )
     team.SetUp( TEAM_BLUE, "Blue Team", Color(0, 162, 255) )
     team.SetClass( TEAM_BLUE, { "player_blue" } )
+    team.SetUp( TEAM_FUN, "Fun Team", Color(255, 0, 255), false )
+    team.SetClass( TEAM_FUN, { "player_default" } )
     team.SetUp( TEAM_SPECTATOR, "Spectateur", Color(150, 150, 150) )
     team.SetSpawnPoint( TEAM_SPECTATOR, "worldspawn" )
 end
