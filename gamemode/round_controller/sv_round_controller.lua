@@ -37,8 +37,8 @@ function IncrementScore( pPlayer )
 
     if team.GetScore( iTeamIndex ) >= 3 then
         local tTeams = team.GetAllTeams()
-        for iTeam, _ in pairs(tTeams) do
-             team.SetScore(iTeam, 0)
+        for iTeam, _ in pairs( tTeams ) do
+             team.SetScore( iTeam, 0 )
         end
 
         EndRound()
@@ -48,9 +48,7 @@ end
 
 -- Block respawn when round is over
 function GM:PlayerDeathThink( pPlayer )
-    if pPlayer:Team() ~= TEAM_SPECTATOR and iRoundStatus == 1 then
-        return false
-    end
+    if pPlayer:Team() ~= TEAM_SPECTATOR and iRoundStatus == 1 then return false end
     pPlayer:Spawn()
     return true
 end

@@ -8,7 +8,7 @@ function GM:HUDPaint()
 
     draw.RoundedBox(8, iHudX, iHudY, iHudWidth, iHudHeight, Color(0, 0, 0, 150))
 
-    local sRoundText = (iRoundStatus == 0) and "Round in progress.." or "Round is finishing"
+    local sRoundText = ( iRoundStatus == 0 ) and "Round in progress.." or "Round is finishing"
 
     local iTextX = iHudX + iHudWidth / 2
     local iTextY = iHudY + iHudHeight / 2
